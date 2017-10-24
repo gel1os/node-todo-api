@@ -1,9 +1,9 @@
 const expect = require('expect');
 const request = require('supertest');
-const {ObjectID} = require('mongodb');
+const {	ObjectID } = require('mongodb');
 
-const {app} = require('./../server');
-const {Todo} = require('./../models/todo');
+const {	app } = require('./../server');
+const {	Todo } = require('./../models/todo');
 
 const todos = [{
 	text: 'First test todo',
@@ -24,7 +24,9 @@ describe('POST /todos', () => {
 		const text = "Some text";
 		request(app)
 			.post('/todos')
-			.send({text})
+			.send({
+				text
+			})
 			.expect(200)
 			.expect(res => {
 				expect(res.body.text).toBe(text);
@@ -34,7 +36,9 @@ describe('POST /todos', () => {
 					return done(err);
 				}
 
-				Todo.find({text}).then(todos => {
+				Todo.find({
+					text
+				}).then(todos => {
 					expect(todos.length).toBe(1);
 					expect(todos[0].text).toBe(text);
 					done();
@@ -66,7 +70,7 @@ describe('GET /todos', () => {
 			.get('/todos')
 			.expect(200)
 			.expect(res => {
-				expect(res.body.todos.length).toBe(todos.length); 
+				expect(res.body.todos.length).toBe(todos.length);
 			})
 			.end(done);
 	})
